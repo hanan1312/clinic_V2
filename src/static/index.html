@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/shtk.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Se7atech صـــ7ـــتك</title>
+    <!-- Link to the external stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                <div style="display: flex; align-items: center;">
+                    <img src="shtk.png" alt="Clinic Logo" style="height: 50px; width: 50px; margin-right: 15px;" onerror="this.style.display='none'">
+                    <div>
+                         <h1 class="title-with-icon">
+							 <span>Se7atech صـ7ـتك</span>
+						 </h1>
+                        <p>Your Comfort & Health Are Our Top Priorities</p>
+                    </div>
+                </div>
+                <div style="text-align: right;">
+                    <div id="user-info" style="margin-bottom: 10px; color: #4a5568; font-size: 0.9rem;"></div>
+                    <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px; font-size: 0.9rem;">
+                        🚪 Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-tab="dashboard">📊 Dashboard</button>
+            <button class="nav-tab" data-tab="new-reservation">📝 New Reservation</button>
+            <button class="nav-tab" data-tab="patients">👶 Patients</button>
+            <button class="nav-tab" data-tab="add-patient">➕ Add Patient</button>
+            <button class="nav-tab" data-tab="awaiting-hall">⏳ Awaiting Hall</button>
+            <button class="nav-tab" data-tab="finished-reservations">✅ Finished</button>
+            <button class="nav-tab" data-tab="patient-history">📋 Patient History</button>
+            <button class="nav-tab" data-tab="hall-status-manager">🔄 Hall Status</button>
+            <button class="nav-tab" data-tab="reports">📋 Reports</button>
+            <button class="nav-tab" id="add-transaction-tab">💰 Add Transaction</button>
+            <button class="nav-tab" data-tab="financial" id="financial-tab" style="display: none;">📊 Financial</button>
+            <button class="nav-tab" data-tab="settings" id="settings-tab" style="display: none;">⚙️ Settings</button>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="color: #4a5568;">Dashboard Overview</h2>
+                <button class="btn btn-danger" onclick="performDailyReset()">🔄 Daily Reset</button>
+            </div>
+            <div class="stats-grid">
+                <div id="total-patients-card" class="stat-card">
+                    <div class="stat-number" id="total-patients">0</div>
+                    <div class="stat-label">Total Patients</div>
+                </div>
+                <div id="new-patients-card" class="stat-card">
+                    <div class="stat-number" id="new-patients">0</div>
+                    <div class="stat-label">New This Month</div>
+                </div>
+                <div id="avg-age-card" class="stat-card">
+                    <div class="stat-number" id="avg-age">0</div>
+                    <div class="stat-label">Average Age</div>
+                </div>
+                <div id="today-patients-card" class="stat-card">
+                    <div class="stat-number" id="today-patients">0</div>
+                    <div class="stat-label">Today's Patients</div>
+                </div>
+            </div>
+            <div id="today-patients-expanded" class="expandable-card" style="display: none;">
+                <h3 style="margin-bottom: 15px;">Today's Patients Details</h3>
+                <div id="today-patients-list"></div>
+                <button class="btn btn-primary" onclick="submitSelectedPatientsToHall()" style="margin-top: 15px;">Submit Selected "In" Patients</button>
+            </div>
+        </div>
+
+        <!-- New Reservation Tab -->
+        <div id="new-reservation" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">New Reservation</h2>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="reservation-patient-search" placeholder="Search for existing patient..." onkeyup="searchPatientsForReservation()">
+            </div>
+            <div id="reservation-patient-results"></div>
+            <form id="reservation-form" style="display: none;">
+                <h3>Reservation Details</h3>
+                <input type="hidden" id="reservation-patient-id" name="patient_id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="visit-date">Visit Date *</label>
+                        <input type="date" id="visit-date" name="visit_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="visit-time">Visit Time *</label>
+                        <input type="time" id="visit-time" name="visit_time" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="visit-type">Visit Type *</label>
+                        <select id="visit-type" name="visit_type" required>
+                            <option value="">Select Visit Type</option>
+                            <option value="examination">Examination</option>
+                            <option value="fast examination">Fast Examination</option>
+                            <option value="consultation">Consultation</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="hall-status">Hall Status</label>
+                        <select id="hall-status" name="hall_status">
+                            <option value="Out">Out</option>
+                            <option value="In">In</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Reservation</button>
+                <button type="button" class="btn btn-secondary" onclick="cancelReservation()">Cancel</button>
+            </form>
+        </div>
+
+        <!-- Patients Tab -->
+        <div id="patients" class="tab-content">
+             <h2 style="margin-bottom: 20px; color: #4a5568;">Patient Management</h2>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="patient-search" placeholder="Search patients by name, ID, or parent..." onkeyup="searchPatients()">
+            </div>
+            <div id="patients-list"></div>
+        </div>
+
+        <!-- Add Patient Tab -->
+        <div id="add-patient" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">Add New Patient</h2>
+            <form id="patient-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name *</label>
+                        <input type="text" id="first-name" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name *</label>
+                        <input type="text" id="last-name" name="last_name" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date-of-birth">Date of Birth *</label>
+                        <input type="date" id="date-of-birth" name="date_of_birth" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender">Gender *</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="parent-name">Parent Name *</label>
+                        <input type="text" id="parent-name" name="parent_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="patient-phone">Patient Phone</label>
+                        <input type="tel" id="patient-phone" name="patient_phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="blood-type">Blood Type</label>
+                        <select id="blood-type" name="blood_type">
+                            <option value="">Select Blood Type</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city">
+                    </div>
+                    <div class="form-group">
+                        <label for="area">Area</label>
+                        <input type="text" id="area" name="area">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="street">Street</label>
+                        <input type="text" id="street" name="street">
+                    </div>
+                    <div class="form-group">
+                        <label for="apartment">Apartment</label>
+                        <input type="text" id="apartment" name="apartment">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="allergies">Allergies</label>
+                    <textarea id="allergies" name="allergies" rows="3" placeholder="List any known allergies..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="medical-history">Medical History</label>
+                    <textarea id="medical-history" name="medical_history" rows="4" placeholder="Enter medical history..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Patient</button>
+            </form>
+        </div>
+
+        <!-- Other Tabs -->
+        <div id="awaiting-hall" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">Awaiting Hall</h2>
+            <div id="awaiting-patients-list"></div>
+        </div>
+        <div id="finished-reservations" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">Finished Reservations</h2>
+            <div id="finished-patients-list"></div>
+        </div>
+        <div id="patient-history" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">Patient History</h2>
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="history-search" placeholder="Search patient history..." onkeyup="searchPatientHistory()">
+            </div>
+            <div id="patient-history-list"></div>
+        </div>
+        <div id="hall-status-manager" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">Hall Status Manager</h2>
+            <div id="hall-status-list"></div>
+        </div>
+        <div id="reports" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">Reports</h2>
+            <div class="reports-grid">
+                <div class="report-card" onclick="generatePatientReport()">
+                    <h3>📊 Patient Report</h3>
+                    <p>Generate comprehensive patient statistics</p>
+                </div>
+                <div class="report-card" onclick="generateFinancialReport()">
+                    <h3>💰 Financial Report</h3>
+                    <p>Generate financial summary and analytics</p>
+                </div>
+                <div class="report-card" onclick="generateVisitReport()">
+                    <h3>📋 Visit Report</h3>
+                    <p>Generate visit statistics and trends</p>
+                </div>
+            </div>
+        </div>
+        <div id="financial" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">Financial Dashboard</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="revenue-today">$0.00</div>
+                    <div class="stat-label">Today's Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="revenue-month">$0.00</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="transactions-count">0</div>
+                    <div class="stat-label">Transactions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="avg-transaction">$0.00</div>
+                    <div class="stat-label">Avg Transaction</div>
+                </div>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3>Revenue Trend</h3>
+                    <canvas id="revenue-chart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3>Service Revenue</h3>
+                    <canvas id="service-chart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div id="settings" class="tab-content">
+            <h2 style="margin-bottom: 20px; color: #4a5568;">Settings</h2>
+            <form id="clinic-config-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="doctor-name-config">Doctor Name</label>
+                        <input type="text" id="doctor-name-config" name="doctor_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="clinic-name-config">Clinic Name</label>
+                        <input type="text" id="clinic-name-config" name="clinic_name">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clinic-phone-config">Clinic Phone</label>
+                        <input type="tel" id="clinic-phone-config" name="clinic_phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="logo-path-config">Logo Path</label>
+                        <input type="text" id="logo-path-config" name="logo_path">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="clinic-address-config">Clinic Address</label>
+                    <textarea id="clinic-address-config" name="clinic_address" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Settings</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="stats-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeStatsModal()">&times;</span>
+            <h2 id="stats-modal-title"></h2>
+            <div id="stats-modal-content"></div>
+            <button class="btn btn-secondary" onclick="closeStatsModal()" style="margin-top: 20px;">Close</button>
+        </div>
+    </div>
+
+    <!-- Add Transaction Modal -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeTransactionModal()">&times;</span>
+            <h2>Add Transaction</h2>
+            <form id="transaction-form">
+                <div class="form-group">
+                    <label for="transaction-patient-search">Search Patient</label>
+                    <input type="text" id="transaction-patient-search" placeholder="Search for patient..." onkeyup="searchPatientsForTransaction()">
+                    <div id="transaction-patient-results"></div>
+                    <input type="hidden" id="transaction-patient-id" name="patient_id">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="service-type">Service Type *</label>
+                        <select id="service-type" name="service_type_id" required>
+                            <option value="">Select Service Type</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="amount">Amount *</label>
+                        <input type="number" id="amount" name="amount" step="0.01" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="payment-method">Payment Method *</label>
+                        <select id="payment-method" name="payment_method" required>
+                            <option value="">Select Payment Method</option>
+                            <option value="cash">Cash</option>
+                            <option value="card">Card</option>
+                            <option value="insurance">Insurance</option>
+                            <option value="bank_transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-date">Transaction Date</label>
+                        <input type="datetime-local" id="transaction-date" name="transaction_date">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Transaction</button>
+                <button type="button" class="btn btn-secondary" onclick="closeTransactionModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Patient Details Modal -->
+    <div id="patient-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closePatientDetailsModal()">&times;</span>
+            <h2 id="patient-details-title">Patient Details</h2>
+            <div id="patient-details-content"></div>
+            <div class="modal-actions">
+                <button class="btn btn-primary" onclick="editPatient()">Edit Patient</button>
+                <button class="btn btn-success" onclick="addVitals()">Add Vitals</button>
+                <button class="btn btn-info" onclick="generatePatientPDF()">Generate PDF</button>
+                <button class="btn btn-secondary" onclick="closePatientDetailsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
+

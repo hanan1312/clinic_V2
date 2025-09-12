@@ -1,0 +1,56 @@
+2025-09-13 00:00:16,992 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7000
+ * Running on http://192.168.1.121:7000
+2025-09-13 00:00:16,992 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-13 00:00:16,994 - werkzeug - INFO -  * Restarting with stat
+2025-09-13 00:00:17,624 - werkzeug - WARNING -  * Debugger is active!
+2025-09-13 00:00:17,713 - werkzeug - INFO -  * Debugger PIN: 207-537-346
+2025-09-13 00:01:17,398 - src.utils.error_handlers - INFO - GET / - IP: 127.0.0.1
+2025-09-13 00:01:17,399 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:17] "[32mGET / HTTP/1.1[0m" 302 -
+2025-09-13 00:01:17,771 - src.utils.error_handlers - INFO - GET /login - IP: 127.0.0.1
+2025-09-13 00:01:17,789 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:17] "GET /login HTTP/1.1" 200 -
+2025-09-13 00:01:18,009 - src.utils.error_handlers - INFO - GET /shtk.png - IP: 127.0.0.1
+2025-09-13 00:01:18,010 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:18] "[32mGET /shtk.png HTTP/1.1[0m" 302 -
+2025-09-13 00:01:18,136 - src.utils.error_handlers - INFO - GET /login - IP: 127.0.0.1
+2025-09-13 00:01:18,138 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:18] "[36mGET /login HTTP/1.1[0m" 304 -
+2025-09-13 00:01:18,161 - src.utils.error_handlers - INFO - GET /api/auth/check-session - IP: 127.0.0.1
+2025-09-13 00:01:18,163 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:18] "GET /api/auth/check-session HTTP/1.1" 200 -
+2025-09-13 00:01:25,145 - src.utils.error_handlers - INFO - POST /api/auth/login - IP: 127.0.0.1
+2025-09-13 00:01:25,147 - src.utils.error_handlers - INFO - Request data: {'username': 'admin'}
+2025-09-13 00:01:26,089 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:26] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
+2025-09-13 00:01:34,095 - src.utils.error_handlers - INFO - POST /api/auth/login - IP: 127.0.0.1
+2025-09-13 00:01:34,097 - src.utils.error_handlers - INFO - Request data: {'username': 'admin'}
+2025-09-13 00:01:34,176 - src.utils.error_handlers - INFO - GET /login - IP: 127.0.0.1
+2025-09-13 00:01:34,180 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:34] "GET /login?username=admin&password=admin1234 HTTP/1.1" 200 -
+2025-09-13 00:01:34,304 - src.utils.error_handlers - INFO - GET /shtk.png - IP: 127.0.0.1
+2025-09-13 00:01:34,305 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:34] "[32mGET /shtk.png HTTP/1.1[0m" 302 -
+2025-09-13 00:01:34,307 - src.utils.error_handlers - INFO - GET /api/auth/check-session - IP: 127.0.0.1
+2025-09-13 00:01:34,308 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:34] "GET /api/auth/check-session HTTP/1.1" 200 -
+2025-09-13 00:01:34,319 - src.utils.error_handlers - INFO - GET /login - IP: 127.0.0.1
+2025-09-13 00:01:34,321 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:34] "[36mGET /login HTTP/1.1[0m" 304 -
+2025-09-13 00:01:35,156 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:35] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
+2025-09-13 00:01:39,070 - src.utils.error_handlers - INFO - POST /api/auth/login - IP: 127.0.0.1
+2025-09-13 00:01:39,071 - src.utils.error_handlers - INFO - Request data: {'username': 'admin'}
+2025-09-13 00:01:39,935 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:01:39] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
+2025-09-13 00:07:08,400 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:7000
+ * Running on http://192.168.1.121:7000
+2025-09-13 00:07:08,401 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-09-13 00:07:08,402 - werkzeug - INFO -  * Restarting with stat
+2025-09-13 00:07:09,208 - werkzeug - WARNING -  * Debugger is active!
+2025-09-13 00:07:09,209 - werkzeug - INFO -  * Debugger PIN: 207-537-346
+2025-09-13 00:07:13,305 - src.utils.error_handlers - INFO - GET / - IP: 127.0.0.1
+2025-09-13 00:07:13,307 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:07:13] "[32mGET / HTTP/1.1[0m" 302 -
+2025-09-13 00:07:13,631 - src.utils.error_handlers - INFO - GET /login - IP: 127.0.0.1
+2025-09-13 00:07:13,648 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:07:13] "GET /login HTTP/1.1" 200 -
+2025-09-13 00:07:13,896 - src.utils.error_handlers - INFO - GET /shtk.png - IP: 127.0.0.1
+2025-09-13 00:07:13,897 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:07:13] "[32mGET /shtk.png HTTP/1.1[0m" 302 -
+2025-09-13 00:07:14,000 - src.utils.error_handlers - INFO - GET /login - IP: 127.0.0.1
+2025-09-13 00:07:14,002 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:07:14] "[36mGET /login HTTP/1.1[0m" 304 -
+2025-09-13 00:07:14,022 - src.utils.error_handlers - INFO - GET /api/auth/check-session - IP: 127.0.0.1
+2025-09-13 00:07:14,023 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:07:14] "GET /api/auth/check-session HTTP/1.1" 200 -
+2025-09-13 00:07:16,726 - src.utils.error_handlers - INFO - POST /api/auth/login - IP: 127.0.0.1
+2025-09-13 00:07:16,727 - src.utils.error_handlers - INFO - Request data: {'username': 'admin'}
+2025-09-13 00:07:17,890 - werkzeug - INFO - 127.0.0.1 - - [13/Sep/2025 00:07:17] "[31m[1mPOST /api/auth/login HTTP/1.1[0m" 401 -
